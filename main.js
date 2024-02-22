@@ -10,30 +10,48 @@ document.addEventListener('DOMContentLoaded', function(){
     const followingeElement = document.getElementById('following');
     const linkElement = document.getElementById('link');
 
-    fetch(`${API_LINK}${USERNAME}`)
-    .then(function(response){
-        return response.json();
-    })
-        .then(function(json){
-            nameElement.innerHTML = json.name;
-            usernameElement.innerHTML = json.login;
-            avatarElement.setAttribute("src", json.avatar_url);
-            repositoryElement.innerHTML = json.public_repos;
-            followersElement.innerHTML =  json.followers;
-            followingeElement.innerHTML = json.following;
-            linkElement.setAttribute("href", json.html_url);
-            linkElement.setAttribute("target", "_blank");
+    fazRequisição();
             
-            // = json.html_url;
-        })
+            
+        
 
 
 
+
+    function fazRequisição() {
+
+        try {
+            fetch(`${API_LINK}${USERNAME}`)
+            .then(function(response){
+                if (response.ok) {
+                return response.json();
+                }   else {
+                    console.log(`Erro do tipo ${response.status}`)
+                }
+                })
+                .then(function(json){
+                    nameElement.innerHTML = json.name;
+                    usernameElement.innerHTML = json.login;
+                    avatarElement.setAttribute("src", json.avatar_url);
+                    repositoryElement.innerHTML = json.public_repos;
+                    followersElement.innerHTML =  json.followers;
+                    followingeElement.innerHTML = json.following;
+                    linkElement.setAttribute("href", json.html_url);
+                    linkElement.setAttribute("target", "_blank");
+                })
+            
+        } catch {
+            console.log("Erro na requisição.");
+
+        }
+
+
+
+
+
+    }
 
 
 
 
 })
-
-
-
